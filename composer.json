@@ -1,0 +1,31 @@
+{
+    "name": "radphp/categories-bundle",
+    "type": "radphp-bundle",
+    "license": "MIT",
+    "description": "Categories bundle",
+    "keywords": ["RadPHP", "categories", "category", "bundle"],
+    "authors": [
+        {
+            "name": "Mohammad Abdoli Rad",
+            "email": "m.abdolirad@gmail.com",
+            "role": "Project Founder"
+        },
+        {
+            "name": "Omid Mottaghi Rad",
+            "email": "omidmr@gmail.com",
+            "role": "Project Founder"
+        }
+    ],
+    "require": {
+        "radphp/radphp": "dev-master",
+        "radphp/cake-orm-bundle": "dev-master",
+        "radphp/twig-bundle": "dev-master",
+        "atkrad/data-tables": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Categories\\": "."
+        }
+    }
+}
+
