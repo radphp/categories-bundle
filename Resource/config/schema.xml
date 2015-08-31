@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database>
+    <table name="categories" alias="Categories" tableClass="Categories\Domain\Table\CategoriesTable"
+           entityClass="Categories\Domain\Entity\Category">
+        <column name="id" type="biginteger" null="false"/>
+        <column name="parent_id" type="biginteger"/>
+        <column name="tree_left" type="biginteger" null="false"/>
+        <column name="tree_right" type="biginteger" null="false"/>
+        <column name="scope" type="string"/>
+        <column name="level" type="integer"/>
+        <column name="slug" type="string" null="false"/>
+        <column name="title" type="string"/>
+        <column name="description" type="text"/>
+        <column name="created_at" type="datetime"/>
+        <column name="updated_at" type="datetime"/>
+
+        <unique>
+            <unique-column name="slug"/>
+        </unique>
+        <primary>
+            <primary-column name="id"/>
+        </primary>
+        <foreign foreignTable="categories" onUpdate="noAction" onDelete="cascade">
+            <reference local="parent_id" foreign="id"/>
+        </foreign>
+        <index>
+            <index-column name="scope"/>
+        </index>
+        <index>
+            <index-column name="title"/>
+        </index>
+        <index>
+            <index-column name="tree_left"/>
+        </index>
+        <index>
+            <index-column name="tree_right"/>
+        </index>
+        <index>
+            <index-column name="created_at"/>
+        </index>
+        <index>
+            <index-column name="updated_at"/>
+        </index>
+    </table>
+</database>
