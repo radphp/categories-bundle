@@ -5,7 +5,7 @@ use Phinx\Migration\AbstractMigration;
 /**
  * Initial Categories
  */
-class Initial extends AbstractMigration
+class InitialCategories extends AbstractMigration
 {
     /**
      * Change Method.
