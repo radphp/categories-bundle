@@ -3,22 +3,20 @@
 namespace Categories;
 
 use Admin\Library\Menu;
-use Rad\Core\Bundle;
+use Rad\Core\AbstractBundle;
 
 /**
- * Categories Bootstrap
+ * Categories Bundle
  *
  * @package Categories
  */
-class Bootstrap extends Bundle
+class CategoriesBundle extends AbstractBundle
 {
     /**
      * {@inheritdoc}
      */
     public function startup()
     {
-        parent::startup();
-
         $this->getEventManager()->attach(Menu::EVENT_GET_MENU, [$this, 'addAdminMenu']);
     }
 
