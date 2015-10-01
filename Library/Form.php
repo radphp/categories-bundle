@@ -63,6 +63,8 @@ class Form
         }
 
         $formBuilder = $formFactory->createBuilder('form', $data, $options)
+            ->add('title', 'text', ['required' => true, 'attr' => ['class' => 'form-control']])
+            ->add('slug', 'text', ['required' => true, 'attr' => ['class' => 'form-control']])
             ->add(
                 'parent_id',
                 'choice',
@@ -73,9 +75,7 @@ class Form
                     'label' => 'Parent',
                     'required' => false
                 ]
-            )
-            ->add('slug', 'text')
-            ->add('title', 'text');
+            );
 
         if (!empty($event->getResult())) {
             $choices = $event->getResult();
@@ -84,10 +84,18 @@ class Form
                 $choices = [$choices];
             }
 
-            $formBuilder->add('scope', 'choice', ['choices' => $choices]);
+            $formBuilder->add('Group', 'choice', ['choices' => $choices]);
         }
 
-        return $formBuilder->add('description', 'textarea', ['required' => false])
+        return $formBuilder->add(
+            'description',
+            'textarea',
+            [
+                'required' => false,
+                'attr' => [
+                    'class' => 'form-control wysiwyg'
+                ]
+            ])
             ->add('submit', 'submit')
             ->getForm();
     }
