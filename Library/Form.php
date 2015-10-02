@@ -84,7 +84,7 @@ class Form
                 $choices = [$choices];
             }
 
-            $formBuilder->add('Group', 'choice', ['choices' => $choices]);
+            $formBuilder->add('scope', 'choice', ['choices' => $choices, 'label' => 'Group']);
         }
 
         return $formBuilder->add(
