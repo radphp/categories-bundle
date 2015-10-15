@@ -24,21 +24,27 @@ class GetMethodResponder extends AppResponder
     {
         /** @var Table $table */
         $table = $this->getData('table');
-        if ($table instanceof Table && $this->getRequest()->isAjax()) {
-            return new JsonResponse($table->getResponse()->toArray());
-        } elseif ($table instanceof Table) {
-            return new TwigResponse('@Categories/index.twig', ['table' => $table->render()]);
+        if ($table instanceof Table) {
+            if ($this->getRequest()->isAjax()) {
+                return new JsonResponse($table->getResponse()->toArray());
+            } else {
+                return new TwigResponse('@Categories/index.twig', ['table' => $table->render()]);
+            }
         }
 
-        // if it is edit form
-        if ($form = $this->getData('form', false)) {
-            return new TwigResponse(
-                '@Categories/form.twig',
-                [
-                    'form' => $form->createView(),
-                    'title' => 'Edit a category',
-                ]
-            );
+        if ($this->getRequest()->isAjax()) {
+            return new JsonResponse($this->getData('categories', []));
+        } else {
+            // if it is edit form
+            if ($form = $this->getData('form', false)) {
+                return new TwigResponse(
+                    '@Categories/form.twig',
+                    [
+                        'form' => $form->createView(),
+                        'title' => 'Edit a category',
+                    ]
+                );
+            }
         }
     }
 }

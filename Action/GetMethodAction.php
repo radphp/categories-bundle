@@ -28,8 +28,16 @@ class GetMethodAction extends AppAction
      */
     public function __invoke($id = null)
     {
-        if (null !== $id) {
-            $this->getResponder()->setData('form', Form::create()->getForm($this->getCategories($id)));
+        if ($id) {
+            $categories = $this->getCategories($id);
+
+            if ($this->getRequest()->isAjax()) {
+                $categories = $categories->toArray();
+                $categories['children'] = $this->getChildren($id, true)->toArray();
+                $this->getResponder()->setData('categories', $categories);
+            } else {
+                $this->getResponder()->setData('form', Form::create()->getForm($categories));
+            }
         } else {
             $this->getResponder()->setData('table', $this->getDataTable());
         }
@@ -46,7 +54,7 @@ class GetMethodAction extends AppAction
     {
         $categoriesTable = TableRegistry::get('Categories.Categories');
 
-        if (null !== $id) {
+        if ($id) {
             return $categoriesTable->find()
                 ->where(['id' => $id])
                 ->first();
@@ -54,6 +62,28 @@ class GetMethodAction extends AppAction
 
         return $categoriesTable->find()
             ->contain('ParentCategories');
+    }
+
+    /**
+     * Get node children
+     *
+     * @param null $id Category id
+     *
+     * @return \Cake\ORM\Query|mixed
+     */
+    protected function getChildren($id, $direct = false)
+    {
+        $categoriesTable = TableRegistry::get('Categories.Categories');
+
+        $findParams = ['for' => $id];
+
+        if ($direct) {
+            $findParams['direct'] = true;
+        }
+
+        $categories = $categoriesTable->find('children', $findParams);
+
+        return $categories;
     }
 
     /**
@@ -65,7 +95,6 @@ class GetMethodAction extends AppAction
     protected function getDataTable()
     {
         TwigHelper::addCss('file:///Admin/vendor/datatables/media/css/jquery.dataTables.min.css', 100);
-        TwigHelper::addJs('file:///Admin/vendor/jquery/dist/jquery.min.js', 20);
         TwigHelper::addJs('file:///Admin/vendor/datatables/media/js/jquery.dataTables.min.js', 100);
         TwigHelper::addJs('
         function deleteCategory(id) {
@@ -92,12 +121,17 @@ class GetMethodAction extends AppAction
         $table->addColumn($col);
 
         $col = new Column();
+        $col->setTitle('Scope')
+            ->setData('Categories.scope');
+        $table->addColumn($col);
+
+        $col = new Column();
         $col->setTitle('Parent')
             ->setData('Categories.parent_id')
             ->isSearchable(false)
             ->setFormatter(function ($parentId, Category $category) {
                 if (null === $parentId) {
-                    return 'No Parent';
+                    return '-';
                 }
 
                 return $category->parentCategory->get('title');
