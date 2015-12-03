@@ -3,6 +3,7 @@
 namespace Categories\Library;
 
 use Cake\Database\Expression\QueryExpression;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Categories\Domain\Entity\Category;
 use Categories\Domain\Table\CategoriesTable;
@@ -69,9 +70,9 @@ class Form
                 'parent_id',
                 'choice',
                 [
-                    'choices' => $treeList,
+                    'choices' => $treeList->toArray(),
                     'empty_data' => null,
-                    'empty_value' => "No Parent",
+                    'empty_value' => 'No Parent',
                     'label' => 'Parent',
                     'required' => false
                 ]
