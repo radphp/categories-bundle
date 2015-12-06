@@ -2,8 +2,8 @@
 
 namespace Categories;
 
-use Admin\Library\Menu;
 use Rad\Core\AbstractBundle;
+use Rad\Stuff\Admin\Menu;
 
 /**
  * Categories Bundle
@@ -25,8 +25,22 @@ class CategoriesBundle extends AbstractBundle
      */
     public function addAdminMenu()
     {
-        $parent = Menu::addMenu('Categories', 'fa-file-text');
-        Menu::addMenu('Categories', '', '/admin/bundles/categories', 100, $parent);
-        Menu::addMenu('Add Category', '', '/admin/bundles/categories/new', 110, $parent);
+        $menuItem1 = (new Menu())
+            ->setLabel('Categories')
+            ->setLink('/admin/bundles/categories')
+            ->setOrder(100);
+
+        $menuItem2 = (new Menu())
+            ->setLabel('Add Category')
+            ->setLink('/admin/bundles/categories/new')
+            ->setOrder(110);
+
+        $root = new Menu();
+        $root->setLabel('Categories')
+            ->setIcon('fa-file-text')
+            ->setOrder(100)
+            ->addChild($menuItem1)
+            ->addChild($menuItem2)
+            ->setAsRoot();
     }
 }
