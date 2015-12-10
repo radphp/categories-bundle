@@ -5,6 +5,7 @@ namespace Categories\Action;
 use App\Action\AppAction;
 use Cake\ORM\TableRegistry;
 use Categories\Domain\Table\CategoriesTable;
+use Categories\Library\AuthorizationTrait;
 use Rad\Network\Http\Response\RedirectResponse;
 
 /**
@@ -14,6 +15,8 @@ use Rad\Network\Http\Response\RedirectResponse;
  */
 class PutMethodAction extends AppAction
 {
+    use AuthorizationTrait;
+
     /**
      * Invoke put action
      *

@@ -3,6 +3,7 @@
 namespace Categories\Action;
 
 use App\Action\AppAction;
+use Categories\Library\AuthorizationTrait;
 use Categories\Library\Form;
 
 /**
@@ -12,6 +13,8 @@ use Categories\Library\Form;
  */
 class NewAction extends AppAction
 {
+    use AuthorizationTrait;
+
     /**
      * Get method
      *

@@ -3,6 +3,7 @@
 namespace Categories\Action;
 
 use App\Action\AppAction;
+use Categories\Library\AuthorizationTrait;
 use Cake\ORM\TableRegistry;
 use Categories\Domain\Table\CategoriesTable;
 use Rad\Network\Http\Response;
@@ -14,6 +15,8 @@ use Rad\Network\Http\Response;
  */
 class DeleteMethodAction extends AppAction
 {
+    use AuthorizationTrait;
+
     /**
      * Invoke delete method
      *

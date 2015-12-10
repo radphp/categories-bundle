@@ -41,6 +41,7 @@ class CategoriesBundle extends AbstractBundle
             ->setOrder(100)
             ->addChild($menuItem1)
             ->addChild($menuItem2)
+            ->setResources(['categories.manage'])
             ->setAsRoot();
     }
 }
