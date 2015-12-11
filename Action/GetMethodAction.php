@@ -19,8 +19,6 @@ use Twig\Library\Helper as TwigHelper;
  */
 class GetMethodAction extends AppAction
 {
-    use AuthorizationTrait;
-
     /**
      * Invoke Action
      *
